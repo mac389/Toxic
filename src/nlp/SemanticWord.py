@@ -5,6 +5,7 @@ import json
 import numpy as np
 
 from nltk.corpus import wordnet
+
 from pprint import pformat
 from termcolor import colored
 
@@ -15,8 +16,9 @@ listify = lambda item: item if type(item) == type([]) and item != None else list
 class SemanticWord(object):
 
 	def __init__(self,word,part_of_speech,lookuptable):
-		self.word = wordnet.morphy(word) #Lemmatization
 		self.part_of_speech = morphy_tag[part_of_speech] if part_of_speech in morphy_tag else wordnet.NOUN
+		self.word = wordnet.morphy(word,self.part_of_speech) #Lemmatization
+
 		self.synset = listify(wordnet.synsets(word,pos=self.part_of_speech)) if self.word else None
 		self.orphan = not self.synset
 		self.db = lookuptable

@@ -3,7 +3,7 @@ import itertools
 
 from time import time
 from pprint import pprint
-from src.SemanticString import SemanticString
+from src.nlp.SemanticString import SemanticString
 from nltk.corpus import wordnet
 from termcolor import colored 
 
@@ -13,7 +13,7 @@ WRITE = 'wb'
 APPEND = 'a+'
 db = json.load(open(filename,READ))
 
-strings = ["Colorless green ideas sleep furiously.","I like drug stores."]
+strings = ["I like dogs.","I like rum.","I like drinking."]
 start = time()
 
 
