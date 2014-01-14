@@ -14,7 +14,7 @@ class Listener(StreamListener):
 		self.output = open(self.filename,'wb')
 		self.output.write('[')
 		self.delout = open('delete.txt','a')
-		self.counter = 0
+		self.count = 0
 
 	def __nonzero__(self):
 		return self.count > self.ceiling

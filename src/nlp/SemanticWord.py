@@ -23,6 +23,7 @@ class SemanticWord(object):
 		self.orphan = not self.synset
 		self.db = lookuptable
 
+
 	def lookup(self,other):
 		#construct query
 		query = '%s-%s'%(self.word,other.word)
@@ -31,10 +32,9 @@ class SemanticWord(object):
 			if transpose_query in self.db:
 				self.db[query] = self.db[transpose_query]
 			else:
-				similarity = np.average(filter(None,[a.path_similarity(b) 
-							for a,b in itertools.combinations(self.synset+other.synset,2)]))
-				distance = 1-similarity if similarity else None #But now None means both no distance and not found
-				self.db[query] = distance
+				distance = np.average(filter(None,[a.shortest_path_distance(b) + b.shortest_path_distance(a)
+						for a in self.synset for b in other.synset]))/2.0 
+				self.db[query] = distance if distance else 0
 		return self.db[query]
 
 
