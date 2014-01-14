@@ -1,4 +1,4 @@
-Toxic (1.0.0)
+Toxic (1.1.0)
 =======
 
 Tools for Syndromic Surveillance using Social Media
