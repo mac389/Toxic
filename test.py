@@ -11,9 +11,8 @@ filename = './data/semantic-distance-database.json'
 READ = 'rb'
 WRITE = 'wb'
 APPEND = 'a+'
-db = json.load(open(filename,READ))
 
-strings = ["I like dogs.","I like rum.","I like drinking."]
+strings = ["I like dogs :-)","I like rum.","I like drinking."]
 start = time()
 
 
@@ -23,8 +22,8 @@ print('/----------------Beginning test ------------\\')
 for one in strings:
 	for two in strings:
 
-		d1 = SemanticString(one,db)
-		d2 = SemanticString(two,db)
+		d1 = SemanticString(one,{})
+		d2 = SemanticString(two,{})
 
 		print '|%s|'%(repr(d1))
 		print '|%s|'%(repr(d2))
@@ -32,7 +31,6 @@ for one in strings:
 		print '|Semantic distance between them: %.04f |'%(d1-d2)
 
 print '---'
-json.dump(db,open(filename,WRITE))	
 print '|Duration %.04f s|'%(time()-start)
 print('\----------------Finished test ------------/')
 

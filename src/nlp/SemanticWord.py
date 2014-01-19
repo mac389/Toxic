@@ -37,12 +37,11 @@ class SemanticWord(object):
 				self.db[query] = distance if distance else 0
 		return self.db[query]
 
-
 	def __sub__(self,other):
 		if self.synset and other.synset and self.part_of_speech == other.part_of_speech: 
 			return 0 if self.word == other.word else self.lookup(other)
 		else:
-			return None
+			return np.nan
 
 	def __repr__(self):
 		return 'word: %s \n sense: %s'%(self.word,pformat(self.synset) if not self.orphan else 'Not in WordNet')
