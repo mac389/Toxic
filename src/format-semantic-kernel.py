@@ -29,10 +29,10 @@ def cleanse(tweet):
 				if not any([word in verboten for verboten in [my_stopwords,punctuation,['RT','http','HTTP'],stopwords.words('english')]])
 				and all([ord(symbol)<128 and symbol not in punctuation and not symbol.isdigit() for symbol in word])])
 	'''
-text = [' '.join([cleanse(tweet['text']) 
+text = ' '.join([' '.join([cleanse(tweet['text']) 
 			for tweet in json.load(open(os.path.join(base,filename),READ))]) 
-			for filename in filenames[:1]][0]
-print len(text)
+			for filename in filenames])
+print len(text.split())
 with open('db-text',WRITE) as f:
 	print>>f,text
 	
