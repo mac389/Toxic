@@ -45,4 +45,4 @@ class SemanticDistance(object):
 		self.similarity[np.diag_indices(len(self.corpus))] = 1
 		#np.savetxt('%s.similarity-matrix-tsv'%(self.filenames['corpus'].rstrip('.txt')),self.M,fmt='%.04f',delimiter='\t')
 		del self.similarity #Del also flushes a memmap to disk
-		self.similarity.close()
+		#self.similarity.close()

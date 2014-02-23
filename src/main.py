@@ -35,12 +35,13 @@ else:
 
 #Calculate semantic distance
 similarity_filename = '/Volumes/My Book/Toxic/data/%s.similarity-matrix-tsv'%trigger
-
+print os.path.isfile(similarity_filename)
 if not os.path.isfile(similarity_filename):
+	print 'ere'
 	corpus_name = '../data/%s.txt'%(trigger)
 	SD.SemanticDistance(corpus_name)
 
 #Visualize results
 
-visualization = SemanticVisualization(trigger)
-visualization.heatmap(show=True)
+#visualization = SemanticVisualization(trigger)
+#visualization.heatmap(show=False)

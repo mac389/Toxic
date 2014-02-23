@@ -1,0 +1,2 @@
+; Construct bigram tagger as an improvement to pos_tag; it incorrectly marks nouns as adjectives or adverbs
+; ABM

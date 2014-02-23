@@ -9,9 +9,12 @@ class TwitterRecord(object):
 		self.trigger = '-'.join(keywords)
 		self.filenames = [filename for filename in os.listdir('../data/') 
 			if self.trigger in filename and not filename.endswith('txt')]
-		
-		self.tweets = [tweet['text'] for tweet in json.load(open('../data/%s'%(filename),'rb')) 
-				for filename in self.filenames]
+		self.tweets = []
+		for filename in self.filenames:
+			try:
+				self.tweets += [tweet['text'] for tweet in json.load(open('../data/%s'%(filename),'rb'))] 
+			except:
+				print filename
 
 		self.textname = '../data/%s.txt'%(self.trigger)
 		with open(self.textname,'wb') as f:

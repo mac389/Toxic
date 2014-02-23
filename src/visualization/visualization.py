@@ -1,9 +1,18 @@
+import nltk, string
+
 import numpy as np
 import matplotlib.pyplot as plt
+import Graphics as artist
 
 from matplotlib import rcParams
-rcParams['text.usetex'] = True
 
+rcParams['text.usetex'] = True
+exclude = set(string.punctuation)
+
+format = lambda text: r'\textbf{%s}'%text
+READ = 'rb'
+stopwords = [word.rstrip('\r\n').strip() for word in open('/Users/michaelchary/Toxic/data/stopwords',READ).readlines()]
+emoticons = [word.rstrip('\r\n').strip() for word in open('/Users/michaelchary/Toxic/data/emoticons',READ).readlines()]
 
 class SemanticVisualization(object):
 
@@ -13,7 +22,7 @@ class SemanticVisualization(object):
 		#again with the dangerous path constructions	
 		self.delimiter = delimiter
 
-		self.data = np.loadtxt(self.filename,delimiter=self.delimiter, dtype='str')
+		#self.data = np.loadtxt(self.filename,delimiter=self.delimiter, dtype='str')
 
 	def heatmap(self,ax=None, show=False,savename=None):
 
@@ -32,5 +41,31 @@ class SemanticVisualization(object):
 		if show:
 			plt.show()
 
-x = SemanticVisualization(trigger='alcohol')
-x.heatmap(show=True)
+	def frequencies(self,str, ax=None, cutoff=30):
+		words = nltk.word_tokenize(''.join(ch for ch in str 
+											if ch not in exclude 
+												and ord(ch)<128 
+												and not ch.isdigit()).lower())
+		words = [word for word in words if word not in stopwords 
+										and word not in emoticons 
+										and word  not in ['rt','amp']]
+		fdist = nltk.FreqDist(words)
+		freqs = fdist.items()[:cutoff]
+		word,f =zip(*freqs)
+		f = np.array(f).astype(float)
+		print f,'kkkkkkk'
+		f /= float(f.sum())
+		print f,'jjjjjjjjjjjj'
+		if not ax:
+			fig = plt.figure()
+			ax = fig.add_subplot(111)
+
+		ax.plot(-f*np.log(f),'k',linewidth=2)
+		artist.adjust_spines(ax)
+		ax.yaxis.grid()
+		ax.xaxis.grid()
+		ax.set_xticks(range(len(word)))
+		ax.set_xticklabels(map(format,word),range(len(word)), rotation=45)
+		ax.set_ylabel(r'\Large $\log \left(\mathbf{Frequency}\right)$')
+		plt.tight_layout()
+		plt.show()

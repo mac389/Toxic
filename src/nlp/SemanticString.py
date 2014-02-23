@@ -23,17 +23,18 @@ CONTRACTIONS3 = [re.compile(r"(?i)\b(Whad)(dd)(ya)\b"),
                  re.compile(r"(?i)\b(Wha)(t)(cha)\b")]
 
 READ = 'rb'
-stopwords = [word.rstrip('\r\n').strip() for word in open('./data/stopwords',READ).readlines()]
-emoticons = [word.rstrip('\r\n').strip() for word in open('./data/emoticons',READ).readlines()]
+stopwords = [word.rstrip('\r\n').strip() for word in open('/Users/michaelchary/Toxic/data/stopwords',READ).readlines()]
+emoticons = [word.rstrip('\r\n').strip() for word in open('/Users/michaelchary/Toxic/data/emoticons',READ).readlines()]
 punctuation = set(string.punctuation) #Can make more efficient with a translator table
 
 class SemanticString(object):
 	def __init__(self, text,db):
 		self.text = text
 		self.db=db
+
 		self.tokens = [sw.SemanticWord(token,part_of_speech,self.db) 
 						for token,part_of_speech in self.pos_tag(self.word_tokenize(text))
-						if token not in punctuation and token not in stopwords]			
+						if token not in punctuation and token not in stopwords]		
 		self.tokens = filter(lambda token: not token.orphan,self.tokens)
 
 		self.synsets = [token.synset for token in self.tokens]
@@ -68,8 +69,9 @@ class SemanticString(object):
 		if self.text == other.text:
 			return 0
 		else:
-			distances = np.array(filter(None,[self.tokens[i] - other.tokens[j] 
-								for i in xrange(len(self.tokens)) for j in xrange(len(other.tokens))]))
+			distances = np.array([self.tokens[i] - other.tokens[j] 
+								for i in xrange(len(self.tokens)) 
+								for j in xrange(len(other.tokens))])
 			distances = distances[~np.isnan(distances)]
 		return np.average(distances) if len(distances)>0 else np.nan
 

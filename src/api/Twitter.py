@@ -28,3 +28,5 @@ class Twitter(object):
 		except AttributeError as inst:
 			print inst
 			self.stream.disconnect()
+		except:
+			print 'here'
