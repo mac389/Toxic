@@ -53,19 +53,17 @@ class SemanticVisualization(object):
 		freqs = fdist.items()[:cutoff]
 		word,f =zip(*freqs)
 		f = np.array(f).astype(float)
-		print f,'kkkkkkk'
 		f /= float(f.sum())
-		print f,'jjjjjjjjjjjj'
 		if not ax:
 			fig = plt.figure()
 			ax = fig.add_subplot(111)
 
-		ax.plot(-f*np.log(f),'k',linewidth=2)
+		ax.plot(f,'k',linewidth=2)
 		artist.adjust_spines(ax)
 		ax.yaxis.grid()
 		ax.xaxis.grid()
 		ax.set_xticks(range(len(word)))
-		ax.set_xticklabels(map(format,word),range(len(word)), rotation=45)
+		ax.set_xticklabels(map(format,word),range(len(word)), rotation=90)
 		ax.set_ylabel(r'\Large $\log \left(\mathbf{Frequency}\right)$')
 		plt.tight_layout()
 		plt.show()
