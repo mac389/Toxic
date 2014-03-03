@@ -5,7 +5,7 @@ from nlp import SemanticDistance as SD
 from nlp.json_to_text import TwitterRecord
 from visualization.visualization import SemanticVisualization
 
-keywords = ['alcohol']
+keywords = ['opioid']
 trigger = '-'.join(keywords)
 
 query_records = [filename for filename in os.listdir('../data') if not filename.endswith('txt') and trigger in filename]
